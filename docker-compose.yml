@@ -11,6 +11,9 @@ services:
     hostname: algo-1
     networks:
       - spark
+    environment:
+      - YARN_NODEMANAGER_OPTS=--add-opens=java.base/java.lang=ALL-UNNAMED
+      - YARN_RESOURCEMANAGER_OPTS=--add-opens=java.base/java.lang=ALL-UNNAMED
     volumes:
         - ./test/resources/config/multi_node/algo-1/:/opt/ml/config:ro
         - ./test/resources/code:/opt/ml/processing/input/code:ro
@@ -24,6 +27,9 @@ services:
     hostname: algo-2
     networks:
       - spark
+    environment:
+      - YARN_NODEMANAGER_OPTS=--add-opens=java.base/java.lang=ALL-UNNAMED
+      - YARN_RESOURCEMANAGER_OPTS=--add-opens=java.base/java.lang=ALL-UNNAMED
     volumes:
         - ./test/resources/config/multi_node/algo-2/:/opt/ml/config:ro
         - ./test/resources/code:/opt/ml/processing/input/code:ro

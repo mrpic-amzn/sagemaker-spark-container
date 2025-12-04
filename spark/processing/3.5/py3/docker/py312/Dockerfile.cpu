@@ -9,7 +9,7 @@ RUN dnf clean all \
     && dnf update expat \
     && dnf install -y awscli vim gcc gzip unzip zip tar wget liblapack* libblas* libopenblas* emacs \
     && dnf install -y openssl openssl-devel \
-    && dnf install -y kernel kernel-headers kernel-devel \
+    && dnf install -y kernel6.12-modules-extra kernel6.12-headers kernel6.12-devel \
     && dnf install -y bzip2-devel libffi-devel sqlite-devel xz-devel \
     && dnf install -y ncurses ncurses-compat-libs binutils \
     && dnf install -y nss-softokn-freebl avahi-libs avahi dbus dbus-libs \
@@ -42,7 +42,7 @@ RUN /usr/local/bin/python3 -m pip install pipenv \
 #Amazon Linux 2023 uses dnf instead of yum as pacakge management tool: https://docs.aws.amazon.com/linux/al2023/ug/package-management.html
 
 # Copied from EMR: https://tiny.amazon.com/kycbidpc/codeamazpackAwsCblob51c8src
-RUN dnf install -y java-1.8.0-amazon-corretto-devel nginx \
+RUN dnf install -y java-17-amazon-corretto-devel nginx \
     && dnf -y clean all && rm -rf /var/cache/dnf
 
 ENV PYTHONDONTWRITEBYTECODE=1
