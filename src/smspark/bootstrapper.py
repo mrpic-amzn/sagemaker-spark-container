@@ -157,9 +157,15 @@ class Bootstrapper:
                 + "\n"
             )
 
-        # Add YARN log directory
+        # Add YARN log directory and Java options
         with open(yarn_env_file_path, "a") as yarn_env_file:
-            yarn_env_file.write("export YARN_LOG_DIR=/var/log/yarn/")
+            yarn_env_file.write("export YARN_LOG_DIR=/var/log/yarn/\n")
+            # Add Java 17 module opens (required for Hadoop/Guice compatibility)
+            java17_opts = "--add-opens=java.base/java.lang=ALL-UNNAMED"
+            yarn_rm_opts = os.environ.get("YARN_RESOURCEMANAGER_OPTS", java17_opts)
+            yarn_nm_opts = os.environ.get("YARN_NODEMANAGER_OPTS", java17_opts)
+            yarn_env_file.write(f'export YARN_RESOURCEMANAGER_OPTS="{yarn_rm_opts}"\n')
+            yarn_env_file.write(f'export YARN_NODEMANAGER_OPTS="{yarn_nm_opts}"\n')
 
         # Configure ip address for name node
         with open(core_site_file_path, "r") as core_file:
